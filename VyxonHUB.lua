@@ -13,18 +13,15 @@
     Made with Love <3
 ]]
 
-
-
-local allowedUserIds = {1178510017,1179279665,7377110745,2729674132}
-local player = game:GetService("Players").LocalPlayer
 local function checkAuthorization()
-	for _, userId in ipairs(allowedUserIds) do
-		if (player.UserId == userId) then
-			return true
-		end
-	end
-	return false
+    local allowedUserIds={1178510017,1179279665,7377110745,2729674132}
+    local player=game:GetService("Players").LocalPlayer
+    for _,userId in ipairs(allowedUserIds) do
+        if player.UserId==userId then return true end
+    end
+    return false
 end
+
 if checkAuthorization() then
 	local FlatIdent_61538 = 0
 	local Fluent
@@ -32,10 +29,29 @@ if checkAuthorization() then
 	local Window
 	local Tabs
 	local RedColor
+	local AutoStuffMain = Tabs.Main:AddSection("Auto Stuff")
+	local PlayerSettingsMain = Tabs.AutoFarm:AddSection("Player Settings")
+	local LocalPlayerMain = Tabs.AutoFarm:AddSection("LocalPlayer")
+	local OtherStuffMain = Tabs.AutoFarm:AddSection("Other")
+	local AutoStuffFarm = Tabs.AutoFarm:AddSection("Auto Stuff")
+	local CustomizeFarm = Tabs.AutoFarm:AddSection("Customize")
+	local OtherStuffFarm = Tabs.AutoFarm:AddSection("Other")
+	local AutoStuffKiller = Tabs.Killer:AddSection("Auto Stuff")
+	local RangeStuffKiller = Tabs.Killer:AddSection("Range Stuff")
+	local WhitelistKiller = Tabs.Killer:AddSection("Whitelist")
+	local AutoStuffRebirths = Tabs.AutoRebirth:AddSection("Auto Stuff")
+	local CustomizeRebirthInput = Tabs.AutoRebirth:AddSection("Customize")
+	local FastRebirths = Tabs.AutoRebirth:AddSection("Fast Rebirths")
+	local CustomFastRebirth = Tabs.AutoRebirth:AddSection("Custom Fast Rebirths")
+	local AntiStuffRebirths = Tabs.AutoRebirth:AddSection("Anti Stuff")
+	local AutoStuffFarm = Tabs.Crystals:AddSection("Auto Stuff")
+	local RemoveStatsFrames = Tabs.Visual:AddSection("Stats")
+	local VisualStuff = Tabs.Visual:AddSection("Visual Stuff")
+	local optimizerOthersTab = Tabs.Other:AddSection("Optimizer")
 	while true do
 		if (3 == FlatIdent_61538) then
 			do
-				local AutoLiftToggle = Tabs.AutoFarm:AddToggle("AutoLiftToggle", {Title="Auto Lift",Description="Automatically Lifts, works for all Machines!",Default=false,BackgroundColor=Color3.fromRGB(255, 0, 0)})
+				local AutoLiftToggle = AutoStuffFarm:AddToggle("AutoLiftToggle", {Title="Auto Lift",Description="Auto Lifts, works for all Machines.",Default=false,BackgroundColor=Color3.fromRGB(255, 0, 0)})
 				AutoLiftToggle:OnChanged(function()
 					local FlatIdent_2BD95 = 0
 					local Players
@@ -47,13 +63,11 @@ if checkAuthorization() then
 							if autoLiftValue then
 								if AutoLiftToggle.Value then
 									autoLiftValue.Value = true
-									AutoLiftToggle.BackgroundColor = RedColor
 								else
 									local FlatIdent_60EA1 = 0
 									while true do
 										if (FlatIdent_60EA1 == 0) then
 											autoLiftValue.Value = false
-											AutoLiftToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 											break
 										end
 									end
@@ -68,7 +82,7 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local RepTimeToggle = Tabs.AutoFarm:AddToggle("RepTimeToggle", {Title="Fast Rep (All)",Description="Applies Fast Repetition for all Machines",Default=false})
+				local RepTimeToggle = OtherStuffFarm:AddToggle("RepTimeToggle", {Title="Fast Rep",Description="Removes Rep Cooldown.",Default=false})
 				RepTimeToggle:OnChanged(function()
 					local FlatIdent_31A5A = 0
 					local updateRepTimeValues
@@ -84,13 +98,11 @@ if checkAuthorization() then
 									if (obj:IsA("NumberValue") and (obj.Name == "repTime")) then
 										if RepTimeToggle.Value then
 											obj.Value = 0
-											RepTimeToggle.BackgroundColor = RedColor
 										else
 											local FlatIdent_31905 = 0
 											while true do
 												if (0 == FlatIdent_31905) then
 													obj.Value = 1
-													RepTimeToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 													break
 												end
 											end
@@ -102,7 +114,7 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local AutoEatProteinToggle = Tabs.Main:AddToggle("AutoEatProteinToggle", {Title="Auto Eat Protein Egg",Description="Automatically eats one Egg every 30 minutes",Default=false})
+				local AutoEatProteinToggle = AutoStuffMain:AddToggle("AutoEatProteinToggle", {Title="Auto Protein Egg",Description="Automatically eats Protein Egg.",Default=false})
 				local scheduledTask
 				AutoEatProteinToggle:OnChanged(function()
 					if AutoEatProteinToggle.Value then
@@ -142,14 +154,11 @@ if checkAuthorization() then
 						end
 						equipAndUseProteinEgg()
 						AutoEatProteinToggle.BackgroundColor = RedColor
-					else
-						if scheduledTask then
-							task.cancel(scheduledTask)
-						end
-						AutoEatProteinToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
+					elseif scheduledTask then
+						task.cancel(scheduledTask)
 					end
 				end)
-				local AutoTropicalShakeToggle = Tabs.Main:AddToggle("AutoTropicalShakeToggle", {Title="Auto Eat Tropical Shake",Description="Automatically eats Tropical Shake each 30min",Default=false})
+				local AutoTropicalShakeToggle = AutoStuffMain:AddToggle("AutoTropicalShakeToggle", {Title="Auto Tropical Shake",Description="Automatically eats Tropical Shake.",Default=false})
 				AutoTropicalShakeToggle:OnChanged(function()
 					if AutoTropicalShakeToggle.Value then
 						local FlatIdent_27957 = 0
@@ -235,7 +244,7 @@ if checkAuthorization() then
 						AutoTropicalShakeToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 					end
 				end)
-				local FortuneWheelToggle = Tabs.Main:AddToggle("FortuneWheelToggle", {Title="Auto Fortune Wheel Spin",Description="Auto Spins till no Spins left",Default=false})
+				local FortuneWheelToggle = AutoStuffMain:AddToggle("FortuneWheelToggle", {Title="Auto Fortune",Description="Auto Spins in Fortune.",Default=false})
 				FortuneWheelToggle:OnChanged(function()
 					if FortuneWheelToggle.Value then
 						local FlatIdent_3EEE1 = 0
@@ -244,7 +253,8 @@ if checkAuthorization() then
 							if (FlatIdent_3EEE1 == 0) then
 								SpinFortuneWheel = nil
 								function SpinFortuneWheel()
-									for i = 1, 17 do
+									for i = 1, 99 do
+										task.wait(0.5)
 										game:GetService("ReplicatedStorage").rEvents.openFortuneWheelRemote:InvokeServer("openFortuneWheel", game:GetService("ReplicatedStorage").fortuneWheelChances["Fortune Wheel"])
 									end
 								end
@@ -252,15 +262,13 @@ if checkAuthorization() then
 							end
 							if (FlatIdent_3EEE1 == 1) then
 								SpinFortuneWheel()
-								FortuneWheelToggle.BackgroundColor = RedColor
 								break
 							end
 						end
 					else
-						FortuneWheelToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 					end
 				end)
-				local AdsToggle = Tabs.Main:AddToggle("AdsToggle", {Title="Remove Ads",Description="Removes Ads in Spawn",Default=false})
+				local AdsToggle = OtherStuffMain:AddToggle("AdsToggle", {Title="Remove Ads",Description="Removes Ads, (Portal .. etc).",Default=false})
 				AdsToggle:OnChanged(function()
 					local FlatIdent_324DE = 0
 					local Player
@@ -280,22 +288,16 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local function SpinFortuneWheel()
-					for i = 1, 9999 do
-						game:GetService("ReplicatedStorage").rEvents.openFortuneWheelRemote:InvokeServer("openFortuneWheel", game:GetService("ReplicatedStorage").fortuneWheelChances["Fortune Wheel"])
-					end
-				end
-				local AutoSizeInput = Tabs.Main:AddInput("AutoSizeInput", {Title="Set Size",Default="2",Placeholder="Enter size value",Numeric=true,Finished=true,Callback=function(Value)
+				local AutoSizeInput = PlayerSettingsMain:AddInput("AutoSizeInput", {Title="Size Value",Default="2",Placeholder="Enter size value",Numeric=true,Finished=true,Callback=function(Value)
 					local FlatIdent_7909D = 0
 					while true do
 						if (FlatIdent_7909D == 0) then
 							_G.targetSize = tonumber(Value)
-							print("Size set to:", Value)
 							break
 						end
 					end
 				end})
-				local SetSizeToggle = Tabs.Main:AddToggle("SetSizeToggle", {Title="Auto Size",Description="Sets the Size value automatically",Default=false})
+				local SetSizeToggle = PlayerSettingsMain:AddToggle("SetSizeToggle", {Title="Auto Size",Description="Set the Size value automatically.",Default=false})
 				SetSizeToggle:OnChanged(function()
 					if SetSizeToggle.Value then
 						local FlatIdent_64E40 = 0
@@ -308,15 +310,12 @@ if checkAuthorization() then
 							end
 							if (FlatIdent_64E40 == 1) then
 								game:GetService("ReplicatedStorage").rEvents.savePlayerSizeEvent:FireServer("savePlayerSizeOption")
-								SetSizeToggle.BackgroundColor = Color3.fromRGB(255, 0, 0)
 								break
 							end
 						end
-					else
-						SetSizeToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 					end
 				end)
-				local AutoSpeedInput = Tabs.Main:AddInput("AutoSpeedInput", {Title="Set Speed",Default="14",Placeholder="Enter speed value",Numeric=true,Finished=true,Callback=function(Value)
+				local AutoSpeedInput = PlayerSettingsMain:AddInput("AutoSpeedInput", {Title="Speed Value",Default="14",Placeholder="Enter speed value",Numeric=true,Finished=true,Callback=function(Value)
 					local FlatIdent_207CC = 0
 					while true do
 						if (FlatIdent_207CC == 0) then
@@ -326,7 +325,7 @@ if checkAuthorization() then
 						end
 					end
 				end})
-				local SetSpeedToggle = Tabs.Main:AddToggle("SetSpeedToggle", {Title="Auto Speed Set",Description="Sets the Speed value automatically",Default=false})
+				local SetSpeedToggle = PlayerSettingsMain:AddToggle("SetSpeedToggle", {Title="Auto Speed Set",Description="Set the Speed value automatically.",Default=false})
 				SetSpeedToggle:OnChanged(function()
 					if SetSpeedToggle.Value then
 						local FlatIdent_6DC53 = 0
@@ -339,15 +338,12 @@ if checkAuthorization() then
 							end
 							if (1 == FlatIdent_6DC53) then
 								game:GetService("ReplicatedStorage").rEvents.savePlayerSizeEvent:FireServer("savePlayerSpeedOption")
-								SetSpeedToggle.BackgroundColor = Color3.fromRGB(255, 0, 0)
 								break
 							end
 						end
-					else
-						SetSpeedToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 					end
 				end)
-				local AntiKnockbackToggle = Tabs.Main:AddToggle("AntiKnockbackToggle", {Title="Anti Knockback",Description="Prevents knockbacks",Default=false})
+				local AntiKnockbackToggle = LocalPlayerMain:AddToggle("AntiKnockbackToggle", {Title="Anti Knockback",Description="Disable knockbacks.",Default=false})
 				AntiKnockbackToggle:OnChanged(function()
 					local FlatIdent_68E92 = 0
 					local char
@@ -365,7 +361,7 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local LockPositionToggle = Tabs.Main:AddToggle("LockPositionToggle", {Title="Lock Position",Description="Stops external forces but allows movement",Default=false})
+				local LockPositionToggle = LocalPlayerMain:AddToggle("LockPositionToggle", {Title="Lock Position",Description="Locks Client Position.",Default=false})
 				local LockConnection
 				LockPositionToggle:OnChanged(function()
 					local FlatIdent_6C033 = 0
@@ -404,7 +400,7 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local AutoRebirthInput = Tabs.AutoRebirth:AddInput("AutoRebirthInput", {Title="Auto Rebirth Number",Default="0",Placeholder="Enter the rebirth number",Description="Rebirth Value to Stop at",Numeric=true,Finished=true,Callback=function(Value)
+				local AutoRebirthInput = CustomizeRebirthInput:AddInput("AutoRebirthInput", {Title="Input",Default=None,Placeholder="Enter a number",Description="Rebirth Value to stop at.",Numeric=true,Finished=true,Callback=function(Value)
 					local FlatIdent_29E69 = 0
 					while true do
 						if (FlatIdent_29E69 == 0) then
@@ -414,7 +410,7 @@ if checkAuthorization() then
 						end
 					end
 				end})
-				local AutoRebirthToggle = Tabs.AutoRebirth:AddToggle("AutoRebirthToggle", {Title="Auto Rebirth",Description="Rebirths automatically",Default=false})
+				local AutoRebirthToggle = AutoStuffRebirths:AddToggle("AutoRebirthToggle", {Title="Auto Rebirth",Description="Rebirths automatically.",Default=false})
 				AutoRebirthToggle:OnChanged(function()
 					if AutoRebirthToggle.Value then
 						while AutoRebirthToggle.Value do
@@ -436,7 +432,7 @@ if checkAuthorization() then
 					else
 					end
 				end)
-				local AntiRebirthToggle = Tabs.AutoRebirth:AddToggle("AntiRebirthToggle", {Title="Anti Rebirth",Description="Prevents rebirth from being invoked",Default=false})
+				local AntiRebirthToggle = AntiStuffRebirths:AddToggle("AntiRebirthToggle", {Title="Anti Rebirth",Description="Prevents you from being rebirthed. (Rejoin required to turn off).",Default=false})
 				local function DisableRebirth()
 					local mt = getrawmetatable(game)
 					setreadonly(mt, false)
@@ -533,8 +529,8 @@ if checkAuthorization() then
 						end
 					end
 				end
-				local AutoPunchToggle = Tabs.AutoFarm:AddToggle("AutoPunchToggle", {Title="Auto Punch",Description="Automatically punches",Default=false})
-				local PunchSpeedSlider = Tabs.AutoFarm:AddSlider("PunchSpeedSlider", {Title="Punch Speed",Min=0.05,Max=0.35,Default=0.35,Increment=0.005,Rounding=3,Description="Adjust the speed of Auto Punch"})
+				local AutoPunchToggle = AutoStuffFarm:AddToggle("AutoPunchToggle", {Title="Auto Punch",Description="Automatically punches",Default=false})
+				local PunchSpeedSlider = CustomizeFarm:AddSlider("PunchSpeedSlider", {Title="Punch Speed",Min=0.05,Max=0.35,Default=0.35,Increment=0.005,Rounding=3,Description="Adjust punching speed."})
 				local function IsMouseOverUI()
 					return UIS:GetFocusedTextBox() ~= nil
 				end
@@ -676,7 +672,7 @@ if checkAuthorization() then
 				local petsFolder = Player.petsFolder
 				local powerUpsFolder = Player.powerUpsFolder
 				local Manager = PetManager.new(Player, REvents)
-				local PetManagerToggle = Tabs.AutoRebirth:AddToggle("PetManagerToggle", {Title="OP Rebirth",Description="Swift and Tribal only (PACK Pets)",Default=false})
+				local PetManagerToggle = FastRebirths:AddToggle("PetManagerToggle", {Title="Fast Rebirth",Description="Swift and Tribal (PACK Pets).",Default=false})
 				PetManagerToggle:OnChanged(function()
 					local FlatIdent_331F0 = 0
 					while true do
@@ -689,9 +685,9 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local PetDropdown = Tabs.AutoRebirth:AddDropdown("PetDropdown", {Title="Select Unique Pet",Description="Select the Pet which has a glitch on it",Values={"Infernal Dragon","Ultra Birdie","Magic Butterfly","Aether Spirit Bunny","Cybernetic Showdown Dragon","Darkstar Hunter","Muscle Sensei","Neon Guardian"},Multi=false,Default=""})
-				local AuraDropdown = Tabs.AutoRebirth:AddDropdown("AuraDropdown", {Title="Select Unique Aura",Description="Select the Aura which has a glitch on it",Values={"Inferno","Dark Storm","Dark Lightning","Muscle King","Eternal Megastrike","Entropic Blast"},Multi=false,Default=""})
-				local AutoRebirthToggle = Tabs.AutoRebirth:AddToggle("AutoRebirthToggle", {Title="Auto Rebirth (Tribal & Glitches)",Description="Automatically fetches glitches and Rebirths w Tribals",Default=false})
+				local PetDropdown = CustomFastRebirth:AddDropdown("PetDropdown", {Title="Select Unique Pet",Description="Select the Pet which has a glitch on it.",Values={"Infernal Dragon","Ultra Birdie","Magic Butterfly","Aether Spirit Bunny","Cybernetic Showdown Dragon","Darkstar Hunter","Muscle Sensei","Neon Guardian"},Multi=false,Default=""})
+				local AuraDropdown = CustomFastRebirth:AddDropdown("AuraDropdown", {Title="Select Unique Aura",Description="Select the Aura which has a glitch on it.",Values={"Inferno","Dark Storm","Dark Lightning","Muscle King","Eternal Megastrike","Entropic Blast"},Multi=false,Default=""})
+				local AutoRebirthToggle = CustomFastRebirth:AddToggle("AutoRebirthToggle", {Title="Auto Rebirth (Tribal & Glitches)",Description="Automatically fetches glitches and Tribals.",Default=false})
 				local function getBestPets()
 					local FlatIdent_53124 = 0
 					local bestPets
@@ -790,7 +786,7 @@ if checkAuthorization() then
 				local ChatService = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
 				local MessageInput = Tabs.Chat:AddInput("MessageInput", {Title="Chat Message",Placeholder="Enter message...",Default=""})
 				local TimeInput = Tabs.Chat:AddInput("TimeInput", {Title="Interval (Seconds)",Placeholder="Enter delay...",Default="5",Numeric=true})
-				local ChatToggle = Tabs.Chat:AddToggle("ChatToggle", {Title="Auto Chat",Description="This will allow you to spam in Chat",Default=false})
+				local ChatToggle = Tabs.Chat:AddToggle("ChatToggle", {Title="Auto Chat",Description="This will loop send messages.",Default=false})
 				task.spawn(function()
 					while true do
 						if (ChatToggle.Value and ChatService) then
@@ -812,7 +808,7 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local VisualToggle = Tabs.Visual:AddToggle("VisualToggle", {Title="Add Special Offer",Description="Adds the Limited time offer (Visual Only)",Default=false})
+				local VisualToggle = VisualStuff:AddToggle("VisualToggle", {Title="Add Special Offer",Description="Adds the Limited time offer, (Visual Only).",Default=false})
 				VisualToggle:OnChanged(function()
 					if VisualToggle.Value then
 						local FlatIdent_985A2 = 0
@@ -828,7 +824,7 @@ if checkAuthorization() then
 						VisualToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 					end
 				end)
-				local PetCapacityToggle = Tabs.Visual:AddToggle("PetCapacityToggle", {Title="Inf Pet Capacity",Description="Spoofs your Capacity (Visual Only)",Default=false})
+				local PetCapacityToggle = VisualStuff:AddToggle("PetCapacityToggle", {Title="Inf Pet Capacity",Description="Spoofs your Capacity, (Visual Only).",Default=false})
 				local originalCapacity = game:GetService("Players").LocalPlayer.maxPetCapacity.Value
 				PetCapacityToggle:OnChanged(function()
 					local FlatIdent_512FF = 0
@@ -853,43 +849,17 @@ if checkAuthorization() then
 					end
 				end)
 				local rebirthButton = game.Players.LocalPlayer.PlayerGui.gameGui.sideButtons.rebirthButton
-				local Toggle = Tabs.Visual:AddToggle("RebirthToggle", {Title="Remove Rebirth Button",Description="Removes the Rebirth Button (Visual)",Default=false})
+				local Toggle = Tabs.Visual:AddToggle("RebirthToggle", {Title="Remove Rebirth Button",Description="Removes the Rebirth Button, (Visual).",Default=false})
 				Toggle:OnChanged(function()
 					rebirthButton.Visible = not Toggle.Value
 				end)
 				local rSto = game:GetService("ReplicatedStorage")
-				local StrengthToggle = Tabs.Visual:AddToggle("StrengthToggle", {Title="Remove Strength Frame",Description="Removes the Strength Gain Frame (MoreFPS)",Default=false})
-				local DurabilityToggle = Tabs.Visual:AddToggle("DurabilityToggle", {Title="Removes Durability Frame",Description="Removes the Durability Gain Frame (MoreFPS)",Default=false})
-				local AgilityToggle = Tabs.Visual:AddToggle("AgilityToggle", {Title="Remove Agility Frame",Description="Removes the Agility Gain Frame (MoreFPS)",Default=false})
-				StrengthToggle:OnChanged(function()
-					local strengthFrame = rSto:FindFirstChild("strengthFrame")
-					if strengthFrame then
-						strengthFrame.Visible = not StrengthToggle.Value
-					end
-				end)
-				DurabilityToggle:OnChanged(function()
-					local FlatIdent_89562 = 0
-					local durabilityFrame
-					while true do
-						if (FlatIdent_89562 == 0) then
-							durabilityFrame = rSto:FindFirstChild("durabilityFrame")
-							if durabilityFrame then
-								durabilityFrame.Visible = not DurabilityToggle.Value
-							end
-							break
-						end
-					end
-				end)
-				AgilityToggle:OnChanged(function()
-					local FlatIdent_10DED = 0
-					local agilityFrame
-					while true do
-						if (FlatIdent_10DED == 0) then
-							agilityFrame = rSto:FindFirstChild("agilityFrame")
-							if agilityFrame then
-								agilityFrame.Visible = not AgilityToggle.Value
-							end
-							break
+				local RemoveFramesToggle = RemoveStatsFrames:AddToggle("RemoveFramesToggle", {Title="Remove Frames",Description="Removes Strength, Durability, and Agility Frames (Reduce Lags)",Default=false})
+				RemoveFramesToggle:OnChanged(function()
+					for _, frameName in pairs({"strengthFrame","durabilityFrame","agilityFrame"}) do
+						local frame = rSto:FindFirstChild(frameName)
+						if frame then
+							frame.Visible = not RemoveFramesToggle.Value
 						end
 					end
 				end)
@@ -1159,12 +1129,12 @@ if checkAuthorization() then
 						end
 					end
 				end
-				local AutoWeightToggle = Tabs.AutoFarm:AddToggle("AutoWeightToggle", {Title="Auto Weight",Description="Auto Equip Weight",Default=false})
+				local AutoWeightToggle = AutoStuffFarm:AddToggle("AutoWeightToggle", {Title="Auto Weight",Description="Auto Equip Weight",Default=false})
 				AutoWeightToggle:OnChanged(function()
 					if AutoWeightToggle.Value then
-						EquipTool("Weight")
 						AutoWeightToggle.BackgroundColor = RedColor
 						while AutoWeightToggle.Value and Character:FindFirstChild("Weight") do
+							EquipTool("Weight")
 							LocalPlayer.muscleEvent:FireServer("rep")
 							task.wait(0.01)
 						end
@@ -1179,14 +1149,12 @@ if checkAuthorization() then
 						end
 					end
 				end)
-				local AutoPushupsToggle = Tabs.AutoFarm:AddToggle("AutoPushupsToggle", {Title="Auto Pushups",Description="Auto Equip Pushups",Default=false})
+				local AutoPushupsToggle = AutoStuffFarm:AddToggle("AutoPushupsToggle", {Title="Auto Pushups",Description="Auto Equip Pushups",Default=false})
 				AutoPushupsToggle:OnChanged(function()
 					if AutoPushupsToggle.Value then
 						local FlatIdent_52EE1 = 0
 						while true do
 							if (FlatIdent_52EE1 == 0) then
-								EquipTool("Pushups")
-								AutoPushupsToggle.BackgroundColor = RedColor
 								FlatIdent_52EE1 = 1
 							end
 							if (FlatIdent_52EE1 == 1) then
@@ -1194,6 +1162,7 @@ if checkAuthorization() then
 									local FlatIdent_2F298 = 0
 									while true do
 										if (FlatIdent_2F298 == 0) then
+											EquipTool("Pushups")
 											LocalPlayer.muscleEvent:FireServer("rep")
 											task.wait(0.01)
 											break
@@ -1205,10 +1174,9 @@ if checkAuthorization() then
 						end
 					else
 						UnequipTool("Pushups")
-						AutoPushupsToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 					end
 				end)
-				local AutoSitupsToggle = Tabs.AutoFarm:AddToggle("AutoSitupsToggle", {Title="Auto Situps",Description="Auto Equip Situps",Default=false})
+				local AutoSitupsToggle = AutoStuffFarm:AddToggle("AutoSitupsToggle", {Title="Auto Situps",Description="Auto Equip Situps",Default=false})
 				AutoSitupsToggle:OnChanged(function()
 					if AutoSitupsToggle.Value then
 						local FlatIdent_7D3C9 = 0
@@ -1218,6 +1186,7 @@ if checkAuthorization() then
 									local FlatIdent_15034 = 0
 									while true do
 										if (FlatIdent_15034 == 0) then
+											EquipTool("Situps")
 											LocalPlayer.muscleEvent:FireServer("rep")
 											task.wait(0.01)
 											break
@@ -1227,28 +1196,24 @@ if checkAuthorization() then
 								break
 							end
 							if (0 == FlatIdent_7D3C9) then
-								EquipTool("Situps")
-								AutoSitupsToggle.BackgroundColor = RedColor
 								FlatIdent_7D3C9 = 1
 							end
 						end
 					else
 						UnequipTool("Situps")
-						AutoSitupsToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 					end
 				end)
-				local AutoHandstandsToggle = Tabs.AutoFarm:AddToggle("AutoHandstandsToggle", {Title="Auto Handstands",Description="Auto Equip Handstands",Default=false})
+				local AutoHandstandsToggle = AutoStuffFarm:AddToggle("AutoHandstandsToggle", {Title="Auto Handstands",Description="Auto Equip Handstands",Default=false})
 				AutoHandstandsToggle:OnChanged(function()
 					if AutoHandstandsToggle.Value then
 						local FlatIdent_23FF9 = 0
 						while true do
 							if (FlatIdent_23FF9 == 0) then
-								EquipTool("Handstands")
-								AutoHandstandsToggle.BackgroundColor = RedColor
 								FlatIdent_23FF9 = 1
 							end
 							if (FlatIdent_23FF9 == 1) then
 								while AutoHandstandsToggle.Value and Character:FindFirstChild("Handstands") do
+									EquipTool("Handstands")
 									LocalPlayer.muscleEvent:FireServer("rep")
 									task.wait(0.01)
 								end
@@ -1333,13 +1298,13 @@ if checkAuthorization() then
 						enemyHRP.CFrame = targetCFrame
 					end
 				end
-				local AutoKillToggle = Tabs.Kills:AddToggle("AutoKillToggle", {Title="Auto Kill",Description="Teleports and attacks all enemy players automatically",Default=false,Callback=function(Value)
+				local AutoKillToggle = AutoStuffKiller:AddToggle("AutoKillToggle", {Title="Auto Kill",Description="Auto Kills everyone in the Server.",Default=false,Callback=function(Value)
 					_G.AutoKillEnabled = Value
 				end})
-				local KillAuraToggle = Tabs.Kills:AddToggle("KillAuraToggle", {Title="Kill Aura",Description="Teleports and attacks players within the specified range",Default=false,Callback=function(Value)
+				local KillAuraToggle = RangeStuffKiller:AddToggle("KillAuraToggle", {Title="Kill Aura",Description="Brings and attacks players within the specified range",Default=false,Callback=function(Value)
 					_G.KillAuraEnabled = Value
 				end})
-				local RangeInput = Tabs.Kills:AddInput("RangeInput", {Title="Range",Description="Enter a Value",Default="10",Placeholder="Enter range...",Numeric=true,Finished=true,Callback=function(Value)
+				local RangeInput = RangeStuffKiller:AddInput("RangeInput", {Title="Range",Description="Enter a Value",Default="10",Placeholder="Enter range...",Numeric=true,Finished=true,Callback=function(Value)
 					local FlatIdent_3E44E = 0
 					local range
 					while true do
@@ -1354,7 +1319,7 @@ if checkAuthorization() then
 						end
 					end
 				end})
-				local WhitelistDropdown = Tabs.Kills:AddDropdown("WhitelistDropdown", {Title="Whitelist Players",Description="Choose users to be whitelisted (ignored)",Values=(function()
+				local WhitelistDropdown = WhitelistKiller:AddDropdown("WhitelistDropdown", {Title="Whitelist Players",Description="Choose users to be whitelisted (ignored)",Values=(function()
 					local FlatIdent_23521 = 0
 					local names
 					while true do
@@ -1374,7 +1339,7 @@ if checkAuthorization() then
 				end)(),Multi=true,Default={},Callback=function(SelectedPlayers)
 					_G.Whitelist = SelectedPlayers
 				end})
-				local RefreshPlayersToggle = Tabs.Kills:AddToggle("RefreshPlayersToggle", {Title="Refresh Players",Description="Automatically refresh the player list every second",Default=false,Callback=function(Value)
+				local RefreshPlayersToggle = WhitelistKiller:AddToggle("RefreshPlayersToggle", {Title="Refresh Players",Description="Automatically refresh the player list.",Default=false,Callback=function(Value)
 					_G.RefreshPlayersEnabled = Value
 					if _G.RefreshPlayersEnabled then
 						task.spawn(function()
@@ -1496,7 +1461,7 @@ if checkAuthorization() then
 						ExecuteAutoKill()
 					end
 				end)
-				local AutoPunchHiddenToggle = Tabs.AutoFarm:AddToggle("AutoPunchHiddenToggle", {Title="Auto Punch (Hidden)",Description="Removes the Punch Animation",Default=false})
+				local AutoPunchHiddenToggle = OtherStuffFarm:AddToggle("AutoPunchHiddenToggle", {Title="Auto Punch (Hidden)",Description="Removes the Punch Animation",Default=false})
 				AutoPunchHiddenToggle:OnChanged(function()
 					if AutoPunchHiddenToggle.Value then
 						local FlatIdent_8770C = 0
@@ -1511,7 +1476,6 @@ if checkAuthorization() then
 							end
 							if (FlatIdent_8770C == 1) then
 								UnequipTool("Ground Slam")
-								AutoPunchHiddenToggle.BackgroundColor = RedColor
 								FlatIdent_8770C = 2
 							end
 							if (FlatIdent_8770C == 0) then
@@ -1525,7 +1489,6 @@ if checkAuthorization() then
 						while true do
 							if (0 == FlatIdent_1077D) then
 								UnequipTool("Punch")
-								AutoPunchHiddenToggle.BackgroundColor = Color3.fromRGB(0, 0, 0)
 								break
 							end
 						end
@@ -1577,7 +1540,7 @@ if checkAuthorization() then
 												for _, Pet in pairs(petsFolder:GetChildren()) do
 													rEvents.petEvolveEvent:FireServer("evolvePet", Pet.Name)
 												end
-												wait(0.01)
+												wait(0.05)
 												break
 											end
 										end
@@ -1743,6 +1706,56 @@ if checkAuthorization() then
 					end
 				end)
 			end
+			local rSto, lighting, terrain, content = game:GetService("ReplicatedStorage"), game:GetService("Lighting"), workspace:FindFirstChildOfClass("Terrain"), game:GetService("ContentProvider")
+			local function optimizeDescendants(enabled)
+				for _, v in pairs(workspace:GetDescendants()) do
+					if (v:IsA("Texture") or v:IsA("Decal")) then
+						v.Transparency = (enabled and 1) or 0
+					elseif v:IsA("MeshPart") then
+						v.Material = (enabled and Enum.Material.SmoothPlastic) or Enum.Material.Plastic
+					elseif (v:IsA("ParticleEmitter") or v:IsA("Trail")) then
+						v.Enabled = not enabled
+					elseif v:IsA("Sound") then
+						v:Destroy()
+					end
+				end
+			end
+			local function optimizeLighting(enabled)
+				lighting.GlobalShadows = not enabled
+				lighting.FogEnd = (enabled and 9000000000) or 100000
+				lighting.Brightness = (enabled and 1) or 2
+			end
+			local function optimizeTerrain(enabled)
+				if terrain then
+					terrain.WaterWaveSize, terrain.WaterWaveSpeed, terrain.WaterReflectance = (enabled and 0) or 0.5, (enabled and 0) or 5, (enabled and 0) or 1
+				end
+			end
+			local function setGraphicsLevel(enabled)
+				settings().Rendering.QualityLevel = (enabled and Enum.QualityLevel.Level01) or Enum.QualityLevel.Automatic
+			end
+			local AntiLagToggle = optimizerOthersTab:AddToggle("AntiLagToggle", {Title="Enable Anti-Lag",Description="Boosts FPS by removing unnecessary effects",Default=false})
+			AntiLagToggle:OnChanged(function()
+				for _, frame in pairs({"strengthFrame","durabilityFrame","agilityFrame"}) do
+					local f = rSto:FindFirstChild(frame)
+					if f then
+						f.Visible = not AntiLagToggle.Value
+					end
+				end
+				optimizeDescendants(AntiLagToggle.Value)
+				optimizeLighting(AntiLagToggle.Value)
+				optimizeTerrain(AntiLagToggle.Value)
+			end)
+			local AntiCrashToggle = optimizerOthersTab:AddToggle("AntiCrashToggle", {Title="Enable Anti-Crash",Description="Prevents lag spikes & crashes",Default=true})
+			AntiCrashToggle:OnChanged(function()
+				if AntiCrashToggle.Value then
+					content:SetBaseUrl("")
+					optimizeDescendants(true)
+				end
+			end)
+			local LowGraphicsToggle = optimizerOthersTab:AddToggle("LowGraphicsToggle", {Title="Enable Low Graphics Mode",Description="Reduces render quality for performance",Default=false})
+			LowGraphicsToggle:OnChanged(function()
+				setGraphicsLevel(LowGraphicsToggle.Value)
+			end)
 			break
 		end
 		if (FlatIdent_61538 == 2) then
@@ -1752,7 +1765,7 @@ if checkAuthorization() then
 		end
 		if (FlatIdent_61538 == 1) then
 			SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-			Window = Fluent:CreateWindow({Title="Vyxon",SubTitle="| Muscle Legends V.0.6",TabWidth=140,Size=UDim2.fromOffset(520, 330),Acrylic=true,Theme="Darker",BackgroundColor=Color3.fromRGB(255, 0, 0)})
+			Window = Fluent:CreateWindow({Title="Vyxon",SubTitle="| Muscle Legends | Version: V.0.99",TabWidth=140,Size=UDim2.fromOffset(520, 330),Acrylic=true,Theme="Darker",BackgroundColor=Color3.fromRGB(255, 0, 0)})
 			FlatIdent_61538 = 2
 		end
 		if (FlatIdent_61538 == 0) then
@@ -1764,9 +1777,6 @@ if checkAuthorization() then
 		end
 	end
 else
-	game:GetService("StarterGui"):SetCore("SendNotification", {Title="Not authorized",Text="You dont have permission to use this Script",Duration=5,Button1Callback=function()
-		print("User acknowledged the notification")
-	end,BackgroundTransparency=0.5,TextSize=20,TextColor3=Color3.fromRGB(255, 255, 255),Font=Enum.Font.Gotham})
-	warn("You are not authorized to use this script.")
+	game:GetService("Players").LocalPlayer:Kick("You are not authorized to use this script.\n:) Vyxon")
 	return
 end
